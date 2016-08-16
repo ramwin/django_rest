@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 
 urlpatterns = [
+    url(r'^tieba/', include('tieba.urls', namespace='tieba')),
     url(r'^', include('snippets.urls')),
 ]
 

@@ -18,11 +18,12 @@ class Test(models.Model):
     )
     # user = models.OneToOneField(User)
     gender = models.IntegerField(choices=GENDER_CHOICES, default=-1)
+    text = models.CharField(max_length=255)
 
 
 class Album(models.Model):
     album_name = models.CharField(max_length=100)
-    artist = models.ForeignKey(User)
+    # artist = models.ForeignKey(User)
 
 
 class Track(models.Model):

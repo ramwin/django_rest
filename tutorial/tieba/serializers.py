@@ -18,6 +18,7 @@ class PostSerializer(serializers.Serializer):
 
 
 class TestSerializer(serializers.ModelSerializer):
+    text = serializers.ReadOnlyField()
     pass
 
     class Meta:

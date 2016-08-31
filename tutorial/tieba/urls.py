@@ -7,5 +7,7 @@ from tieba import views
 
 
 urlpatterns = [
-    url(r'^$', views.PostList.as_view(), name='tieba-list'),
+    url(r'^post/$', views.PostList.as_view(), name='tieba-list'),
+    url(r'^post/(?P<pk>[0-9]+)/$',
+        views.PostDetailView.as_view(), name='groupdetail'),
 ]

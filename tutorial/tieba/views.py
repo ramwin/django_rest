@@ -6,7 +6,9 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .models import Post
 from .serializers import PostSerializer
+from .permissions import IsPostAuthor
 from rest_framework.response import Response
+from django.http import HttpResponse, Http404
 
 
 class PostList(APIView):
@@ -24,3 +26,28 @@ class PostList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PostDetailView(APIView):
+    # authentication_classes = (TokenAuthentication, BasicAuthentication)
+    # permission_classes = (IsAuthenticated, IsPraiseAuthor)
+    permission_classes = (IsPostAuthor,)
+
+    def get_object(self, pk):
+        try:
+            return Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        post = self.get_object(pk)
+        # self.check_object_permissions(request, post)
+        self.check_object_permissions(request, post)
+        serializer = PostSerializer(post)
+        return Response(status=200, data=serializer.data)
+
+    def delete(self, request, pk, *args, **kwargs):
+        post = self.get_object(pk)
+        self.check_object_permissions(request, post)
+        post.delete()
+        return Response(status=201)

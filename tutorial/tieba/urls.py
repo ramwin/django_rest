@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^post/$', views.PostList.as_view(), name='tieba-list'),
     url(r'^post/(?P<pk>[0-9]+)/$',
         views.PostDetailView.as_view(), name='groupdetail'),
+    url(r'^testpage/$', views.TestPageList.as_view(), name='test-page-list'),
 ]

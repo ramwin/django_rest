@@ -4,11 +4,25 @@ from django.shortcuts import render
 
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import Post
-from .serializers import PostSerializer
+from .models import Post, TestPage
+from .serializers import PostSerializer, TestPageSerializer
 from .permissions import IsPostAuthor
 from rest_framework.response import Response
 from django.http import HttpResponse, Http404
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import generics
+
+
+class TestPagination(PageNumberPagination):
+    page_size = 10
+    pass
+
+
+class TestPageList(generics.ListAPIView):
+    queryset = TestPage.objects.all()
+    serializer_class = TestPageSerializer
+    pagination_class = TestPagination
+    pass
 
 
 class PostList(APIView):

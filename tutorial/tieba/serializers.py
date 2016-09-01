@@ -4,8 +4,16 @@
 
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Post, Test
+from .models import Post, Test, TestPage
 from .models import Album, Track
+
+
+class TestPageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TestPage
+        excludes = ()
+        fields = "__all__"
 
 
 class PostSerializer(serializers.Serializer):

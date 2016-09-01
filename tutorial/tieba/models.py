@@ -1,8 +1,22 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
 
 # Create your models here.
+
+class TestPage(models.Model):
+    name = models.CharField(max_length=255)
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    @staticmethod
+    def random_create(n):
+        for _ in range(n):
+            a = TestPage(name=get_random_string(6))
+            a.save()
+
 
 class Post(models.Model):
     title = models.CharField(max_length=255)

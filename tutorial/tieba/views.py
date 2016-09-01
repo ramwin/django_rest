@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from django.http import HttpResponse, Http404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
+from rest_framework import request
 
 
 class TestPagination(PageNumberPagination):
@@ -18,11 +19,16 @@ class TestPagination(PageNumberPagination):
     pass
 
 
-class TestPageList(generics.ListAPIView):
+class TestPageList(APIView):
     queryset = TestPage.objects.all()
     serializer_class = TestPageSerializer
     pagination_class = TestPagination
-    pass
+
+    def get(self, request):
+        pagination = self.pagination_class()
+        objs = pagination.paginate_queryset(request=request, queryset=TestPage.objects.all())
+        serializer = self.serializer_class(objs, many=True)
+        return Response(status=200, data=serializer.data)
 
 
 class PostList(APIView):

@@ -10,7 +10,7 @@ class TestPage(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return str(self.pk) + self.name
     @staticmethod
     def random_create(n):
         for _ in range(n):

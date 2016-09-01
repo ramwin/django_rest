@@ -6,6 +6,8 @@ from tieba.models import *
 from django.contrib.auth.models import User
 from tieba.serializers import *
 from snippets.serializers import *
+from tieba.views import *
+from rest_framework.request import Request
 
 wx = User.objects.get(username='wangx')
 a = Album.objects.first()
